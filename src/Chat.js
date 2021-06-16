@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, IconButton } from "@material-ui/core";
-import { AttachFile, MoreVert, SearchOutlined } from "@material-ui/icons";
+import { AttachFile, InsertEmoticon, Mic, MoreVert, SearchOutlined } from "@material-ui/icons";
 
 import "./Chat.css";
 
 function Chat() {
+    const [input, setInput] = useState("");
     const [seed, setSeed] = useState("");
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000));
     }, []);
+
+    const sendMessage = (e) => {
+        e.preventDefault();
+        console.log("You typed >>> ", input);
+        setInput("");
+    };
 
     return (
         <div className="chat">
@@ -42,7 +49,16 @@ function Chat() {
                 </p>
             </div>
             
-            <div className="chat__footer"></div>
+            <div className="chat__footer">
+                <InsertEmoticon />
+                <form>
+                    <input placeholder="Type a message" value={input}
+                        onChange={e => setInput(e.target.value)} type="text" 
+                    />
+                    <button onClick={sendMessage} type="submit">Send a message</button>
+                </form>
+                <Mic />
+            </div>
         </div>
     );
 }
